@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cy1h7yi536eto"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/projectile.gd" id="1_0dbkj"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_jh1tc"]
+[ext_resource type="PackedScene" uid="uid://blahfc1ink5yj" path="res://scenes/components/damage.tscn" id="3_gv60m"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7whsx"]
+radius = 7.0
+height = 38.0
+
+[node name="Projectile" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_0dbkj")
+speed = 400.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_jh1tc")
+region_enabled = true
+region_rect = Rect2(1344, 640, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_7whsx")
+
+[node name="Damage" parent="." instance=ExtResource("3_gv60m")]
+unique_name_in_owner = true

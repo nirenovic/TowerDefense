@@ -1,30 +1,27 @@
-[gd_scene load_steps=9 format=3 uid="uid://oflmp5daotau"]
+[gd_scene load_steps=7 format=3 uid="uid://oflmp5daotau"]
 
 [ext_resource type="Script" path="res://scenes/towers/tower.gd" id="1_1q7rv"]
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_myd87"]
 [ext_resource type="PackedScene" uid="uid://cptnhkvo0lf2h" path="res://scenes/components/health_bar.tscn" id="3_o3dcn"]
-[ext_resource type="Script" path="res://scenes/components/detection_zone.gd" id="4_8f5fp"]
-[ext_resource type="PackedScene" uid="uid://bbaprlwmuhg7h" path="res://scenes/components/gun.tscn" id="5_e8kgm"]
-[ext_resource type="AudioStream" uid="uid://bq7aa8npxcjso" path="res://assets/sounds/fire_missile.mp3" id="6_0l1ll"]
+[ext_resource type="PackedScene" uid="uid://136xh0ljyj2w" path="res://scenes/components/detection_zone.tscn" id="4_8dftg"]
+[ext_resource type="PackedScene" uid="uid://d33u17eq1cx6m" path="res://scenes/components/gun.tscn" id="5_e8kgm"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f7utm"]
-radius = 63.0079
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2ohe"]
+size = Vector2(57, 44)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xvh1h"]
-radius = 178.18
-
-[node name="Tower" type="StaticBody2D" groups=["friendly", "tower"]]
+[node name="Tower" type="StaticBody2D" groups=["tower"]]
 z_index = 1
+collision_layer = 2
 script = ExtResource("1_1q7rv")
+fire_rate = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-rotation = -6.28318
-shape = SubResource("CircleShape2D_f7utm")
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_t2ohe")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-unique_name_in_owner = true
 rotation = 1.5708
 texture = ExtResource("2_myd87")
 region_enabled = true
@@ -34,19 +31,11 @@ region_rect = Rect2(1216, 640, 64, 64)
 unique_name_in_owner = true
 position = Vector2(0, -40)
 
-[node name="DetectionZone" type="Area2D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("4_8f5fp")
+[node name="DetectionZone" parent="." instance=ExtResource("4_8dftg")]
 radius = 220.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
-shape = SubResource("CircleShape2D_xvh1h")
-
 [node name="Gun" parent="." instance=ExtResource("5_e8kgm")]
-unique_name_in_owner = true
-fire_rate = 2.0
 projectile_scene_path = "res://scenes/projectiles/missile.tscn"
-sfx = ExtResource("6_0l1ll")
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

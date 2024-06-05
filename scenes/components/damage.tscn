@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://blahfc1ink5yj"]
+
+[sub_resource type="GDScript" id="GDScript_3bebc"]
+script/source = "extends Node2D
+
+@export var amount: float = 10
+"
+
+[node name="Damage" type="Node2D"]
+script = SubResource("GDScript_3bebc")

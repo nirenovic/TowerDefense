@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw2g06jyvgnq3"]
+
+[ext_resource type="Script" path="res://scenes/projectiles/projectile.gd" id="1_yse0y"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_1317t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yrhfg"]
+radius = 7.0
+height = 38.0
+
+[node name="Missile" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite") groups=["friendly"]]
+script = ExtResource("1_yse0y")
+speed = 1000.0
+hitbox = NodePath("Area2D/CollisionShape2D")
+sprite = NodePath("Sprite2D")
+friendly = true
+damage = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.57079
+texture = ExtResource("2_1317t")
+region_enabled = true
+region_rect = Rect2(1344, 640, 64, 64)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_yrhfg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -35,7 +35,6 @@ unique_name_in_owner = true
 
 [node name="Gun" parent="." instance=ExtResource("4_3q588")]
 unique_name_in_owner = true
-fire_rate = 0.4
 sfx = ExtResource("5_0w4hb")
 
 [node name="DetectionZone" type="Area2D" parent="."]

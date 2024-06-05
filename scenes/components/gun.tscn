@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbaprlwmuhg7h"]
+
+[ext_resource type="Script" path="res://scenes/components/gun.gd" id="1_45o36"]
+[ext_resource type="AudioStream" uid="uid://bq7aa8npxcjso" path="res://assets/sounds/fire_missile.mp3" id="2_3nsw1"]
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_45o36")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_3nsw1")
+volume_db = -6.593
+pitch_scale = 2.15
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
