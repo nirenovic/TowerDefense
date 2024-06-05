@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://oflmp5daotau"]
+
+[ext_resource type="Script" path="res://tower.gd" id="1_h8o8w"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_3g5jr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2ohe"]
+size = Vector2(44, 56)
+
+[node name="Tower" type="CharacterBody2D"]
+script = ExtResource("1_h8o8w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_3g5jr")
+region_enabled = true
+region_rect = Rect2(1216, 640, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_t2ohe")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
