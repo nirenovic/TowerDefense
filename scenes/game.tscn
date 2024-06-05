@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dutr1h4itokck"]
+
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_mfqnr"]
+[ext_resource type="PackedScene" uid="uid://bkh2yd5b0hl12" path="res://scenes/level.tscn" id="2_xp17y"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_mfqnr")
+
+[node name="Level" parent="." instance=ExtResource("2_xp17y")]
+position = Vector2(595, 320)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0

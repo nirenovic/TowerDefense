@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://oflmp5daotau"]
+
+[ext_resource type="Script" path="res://scenes/towers/tower.gd" id="1_1q7rv"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_myd87"]
+[ext_resource type="PackedScene" uid="uid://cptnhkvo0lf2h" path="res://scenes/components/health_bar.tscn" id="3_o3dcn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2ohe"]
+size = Vector2(57, 44)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g0vuk"]
+radius = 235.009
+
+[node name="Tower" type="StaticBody2D" groups=["tower"]]
+z_index = 1
+collision_layer = 2
+script = ExtResource("1_1q7rv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_t2ohe")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+rotation = 1.5708
+texture = ExtResource("2_myd87")
+region_enabled = true
+region_rect = Rect2(1216, 640, 64, 64)
+
+[node name="HealthBar" parent="." instance=ExtResource("3_o3dcn")]
+unique_name_in_owner = true
+position = Vector2(0, -40)
+
+[node name="DetectionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+shape = SubResource("CircleShape2D_g0vuk")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
+[connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

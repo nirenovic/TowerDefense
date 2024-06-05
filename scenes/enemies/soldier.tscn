@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4do05kvumpxs"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_7djb4"]
+[ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_8olwc"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mbhoe"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uwlvy"]
+radius = 136.004
+
+[node name="Soldier" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_8olwc")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_7djb4")
+region_enabled = true
+region_rect = Rect2(960, 640, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mbhoe")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_uwlvy")
