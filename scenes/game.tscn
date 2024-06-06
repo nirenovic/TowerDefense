@@ -7,7 +7,31 @@
 script = ExtResource("1_mfqnr")
 
 [node name="Level" parent="." instance=ExtResource("2_xp17y")]
-position = Vector2(595, 320)
+position = Vector2(1199, 500)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 anchor_mode = 0
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TopBar" type="HBoxContainer" parent="UserInterface/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Score" type="Label" parent="UserInterface/MarginContainer/TopBar"]
+layout_mode = 2
+text = "Score:"

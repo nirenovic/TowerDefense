@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk04i6200dtly"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08i5e"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_1lkn0"]
+material = SubResource("StandardMaterial3D_08i5e")
+size = Vector2(10, 10)
+
+[node name="Marker" type="MeshInstance2D"]
+mesh = SubResource("QuadMesh_1lkn0")

@@ -12,7 +12,7 @@ func _ready():
 
 func _physics_process(delta):
 	if target:
-		look_at(target.global_position)
+		body.look_at(target.global_position)
 		shoot(target.global_position)
 		get_tree().create_timer(2)
 

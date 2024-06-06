@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4do05kvumpxs"]
+[gd_scene load_steps=13 format=3 uid="uid://c4do05kvumpxs"]
 
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_7djb4"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_8olwc"]
@@ -16,22 +16,34 @@ radius = 15.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_xvh1h"]
 radius = 178.18
 
+[sub_resource type="SphereMesh" id="SphereMesh_kyfwn"]
+radius = 10.0
+height = 20.0
+
+[sub_resource type="Gradient" id="Gradient_ip2dm"]
+offsets = PackedFloat32Array(0, 0.993506, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.873462, 3.85046e-07, 0.495049, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dcx25"]
+gradient = SubResource("Gradient_ip2dm")
+
 [node name="Soldier" type="RigidBody2D" groups=["enemy"]]
 physics_material_override = SubResource("PhysicsMaterial_46p11")
 script = ExtResource("1_8olwc")
 
 [node name="Body" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+scale = Vector2(1.62821, 1.62821)
 shape = SubResource("CapsuleShape2D_mbhoe")
 
 [node name="Sprite" type="Sprite2D" parent="Body"]
-rotation = -1.5708
 texture = ExtResource("1_7djb4")
 region_enabled = true
 region_rect = Rect2(960, 640, 64, 64)
 
 [node name="HealthBar" parent="." instance=ExtResource("3_lc401")]
 unique_name_in_owner = true
+position = Vector2(0, -42)
 
 [node name="Gun" parent="." instance=ExtResource("4_3q588")]
 unique_name_in_owner = true
@@ -45,5 +57,11 @@ radius = 150.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_xvh1h")
+
+[node name="PathMarker" type="MeshInstance2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(252, -1)
+mesh = SubResource("SphereMesh_kyfwn")
+texture = SubResource("GradientTexture1D_dcx25")
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
