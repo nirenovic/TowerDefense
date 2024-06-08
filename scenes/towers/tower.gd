@@ -12,8 +12,6 @@ var targets_in_range = []
 
 func _ready():
 	health_bar.dead.connect(die)
-	modulate = '#ffffff8a'
-	
 
 func _physics_process(delta):
 	if active:
@@ -49,7 +47,7 @@ func build(pos: Vector2):
 	global_position = pos 
 	active = true
 	hitbox.disabled = false
-	modulate = "#ffffffff"
+	collision_layer = 1
 	
 func is_active():
 	return active
@@ -78,3 +76,6 @@ func set_target(t):
 	if t.has_method('is_dead'):
 		if !t.is_dead():
 			target = t 
+
+func get_hitbox():
+	return hitbox

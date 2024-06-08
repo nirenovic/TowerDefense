@@ -12,6 +12,7 @@ position = Vector2(1199, 500)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
+anchor_mode = 0
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
 

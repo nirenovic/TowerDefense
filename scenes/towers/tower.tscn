@@ -14,15 +14,15 @@ size = Vector2(147, 146)
 radius = 304.133
 
 [node name="Tower" type="StaticBody2D" groups=["friendly", "tower"]]
-modulate = Color(1, 1, 1, 0.537255)
 z_index = 1
+collision_layer = 256
+collision_mask = 513
 script = ExtResource("1_1q7rv")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_kv0qn")
-disabled = true
 
 [node name="Base" type="Sprite2D" parent="Hitbox"]
 z_index = 1

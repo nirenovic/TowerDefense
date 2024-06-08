@@ -11,6 +11,7 @@ var projectile_scene: PackedScene = null
 var can_fire: bool = false
 
 func _ready():
+	can_fire = true
 	timer.wait_time = fire_rate
 	timer.start()
 	projectile_scene = load(projectile_scene_path)
