@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://bfajojwlgwjgv"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_6a4s7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_o42wd"]
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_yfxtr"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.143396, -360), 0.0, 0.0, 0, 0, Vector2(0.279245, 345.398), 0.0, 0.0, 0, 0, Vector2(0.607547, -107.27), 0.0, 0.0, 0, 0, Vector2(0.875472, -282.496), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ocst"]
+curve = SubResource("Curve_yfxtr")
+
+[sub_resource type="Curve" id="Curve_ukbt7"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(0.166038, -200), 0.0, 0.0, 0, 0, Vector2(0.566038, -152.886), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_svmru"]
+curve = SubResource("Curve_ukbt7")
+
+[sub_resource type="Curve" id="Curve_v6doi"]
+_data = [Vector2(0, 0.685647), 0.0, 0.0, 0, 0, Vector2(0.241509, 1), 1.15166, 1.15166, 0, 0, Vector2(0.445283, 1), 0.0, 0.0, 0, 0, Vector2(0.750943, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_5spad"]
+curve = SubResource("Curve_v6doi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gnwrw"]
+lifetime_randomness = 0.76
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 0.4, 0)
+emission_shape = 1
+emission_sphere_radius = 8.78
+angle_min = -10.0
+angle_max = 10.0
+angle_curve = SubResource("CurveTexture_3ocst")
+direction = Vector3(0, 1, 0)
+spread = 13.562
+initial_velocity_min = 171.23
+initial_velocity_max = 294.52
+gravity = Vector3(0, -1, 0)
+linear_accel_curve = SubResource("CurveTexture_svmru")
+radial_accel_max = 80.82
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_5spad")
+anim_speed_max = 5.81
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j26nj"]
+atlas = ExtResource("1_6a4s7")
+region = Rect2(1408, 768, 64, 64)
+
+[node name="jet_particles" type="GPUParticles2D"]
+modulate = Color(1, 0.792157, 0.168627, 0.337255)
+material = SubResource("CanvasItemMaterial_o42wd")
+scale = Vector2(-0.0989061, 0.335632)
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_gnwrw")
+texture = SubResource("AtlasTexture_j26nj")
+speed_scale = 2.23
+explosiveness = 0.04
+collision_base_size = 0.0

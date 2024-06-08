@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://136xh0ljyj2w"]
+[gd_scene load_steps=4 format=3 uid="uid://136xh0ljyj2w"]
 
 [ext_resource type="Script" path="res://scenes/components/detection_zone.gd" id="1_a2glg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_esuc7"]
+blend_mode = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xvh1h"]
 radius = 178.18
@@ -10,4 +13,5 @@ script = ExtResource("1_a2glg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+material = SubResource("CanvasItemMaterial_esuc7")
 shape = SubResource("CircleShape2D_xvh1h")

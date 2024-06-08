@@ -16,12 +16,14 @@ func _ready():
 	projectile_scene = load(projectile_scene_path)
 	sfx_player.stream = sfx
 	
-func shoot(target: Vector2):
+func shoot(target: Node2D):
 	if can_fire:
 		sfx_player.play()
 		var projectile = projectile_scene.instantiate()
 		projectile.global_position = global_position
-		projectile.set_direction(target)
+		projectile.set_direction(target.global_position)
+		if projectile.is_homing():
+			projectile.set_target(target)
 		get_tree().root.add_child(projectile)
 		can_fire = false
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4do05kvumpxs"]
+[gd_scene load_steps=13 format=3 uid="uid://c4do05kvumpxs"]
 
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_7djb4"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_8olwc"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bbaprlwmuhg7h" path="res://scenes/components/gun.tscn" id="4_3q588"]
 [ext_resource type="AudioStream" uid="uid://b8c6kxatobhhk" path="res://assets/sounds/fire_bullet.mp3" id="5_0w4hb"]
 [ext_resource type="Script" path="res://scenes/components/detection_zone.gd" id="6_o58ed"]
-[ext_resource type="PackedScene" uid="uid://yua1gj8f0cke" path="res://scenes/vfx/blood_particles.tscn" id="7_gup7f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_46p11"]
 rough = true
@@ -28,13 +27,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.873462, 3.85046e-07, 0.495049, 1, 1, 1, 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_dcx25"]
 gradient = SubResource("Gradient_ip2dm")
 
-[node name="Soldier" type="RigidBody2D" node_paths=PackedStringArray("death_particles") groups=["enemy"]]
-z_index = 1
+[node name="Soldier" type="RigidBody2D" groups=["enemy"]]
 physics_material_override = SubResource("PhysicsMaterial_46p11")
 script = ExtResource("1_8olwc")
 speed = 115.015
-death_particles = NodePath("BloodParticles")
-death_sprite_scene_path = "res://scenes/vfx/blood_puddle.tscn"
+death_particles_scene_path = "res://scenes/vfx/blood_particles.tscn"
 
 [node name="Body" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -44,7 +41,7 @@ shape = SubResource("CapsuleShape2D_mbhoe")
 [node name="Sprite" type="Sprite2D" parent="Body"]
 texture = ExtResource("1_7djb4")
 region_enabled = true
-region_rect = Rect2(962, 642, 60, 60)
+region_rect = Rect2(960, 640, 64, 64)
 
 [node name="HealthBar" parent="." instance=ExtResource("3_lc401")]
 unique_name_in_owner = true
@@ -55,15 +52,13 @@ unique_name_in_owner = true
 fire_rate = 0.4
 sfx = ExtResource("5_0w4hb")
 
-[node name="DetectionZone" type="Area2D" parent="." node_paths=PackedStringArray("area")]
+[node name="DetectionZone" type="Area2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_o58ed")
-area = NodePath("CollisionShape2D")
 radius = 150.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_xvh1h")
-debug_color = Color(0, 0.6, 0.701961, 0.0862745)
 
 [node name="PathMarker" type="MeshInstance2D" parent="."]
 unique_name_in_owner = true
@@ -72,8 +67,4 @@ position = Vector2(252, -1)
 mesh = SubResource("SphereMesh_kyfwn")
 texture = SubResource("GradientTexture1D_dcx25")
 
-[node name="BloodParticles" parent="." instance=ExtResource("7_gup7f")]
-z_index = 1
-
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
-[connection signal="finished" from="BloodParticles" to="." method="_on_blood_particles_finished"]

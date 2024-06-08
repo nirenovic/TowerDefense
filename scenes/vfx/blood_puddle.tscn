@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c44buaxlor1d4"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_ugrg0"]
+[ext_resource type="Script" path="res://scenes/vfx/death_sprite.gd" id="2_psiuu"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xnahm"]
+light_mode = 1
+
+[node name="BloodPuddle" type="Sprite2D"]
+modulate = Color(0.521569, 0, 0, 0.796078)
+material = SubResource("CanvasItemMaterial_xnahm")
+texture = ExtResource("1_ugrg0")
+region_enabled = true
+region_rect = Rect2(1346, 321, 60, 60)
+script = ExtResource("2_psiuu")

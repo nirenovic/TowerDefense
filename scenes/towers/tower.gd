@@ -1,23 +1,32 @@
 extends StaticBody2D
 
-@onready var body = %CollisionShape2D
+@onready var turret = %Turret
 @onready var health_bar = %HealthBar 
 @onready var gun = %Gun
-@onready var sprite = %CollisionShape2D/Sprite2D
+@onready var hitbox = %Hitbox
 
 var target = null
+var dead = false
+var active = false
+var targets_in_range = []
 
 func _ready():
 	health_bar.dead.connect(die)
+	modulate = '#ffffff8a'
+	
 
 func _physics_process(delta):
-	if target:
-		body.look_at(target.global_position)
-		shoot(target.global_position)
-		get_tree().create_timer(2)
+	if active:
+		if target:
+			turret.look_at(target.global_position)
+			shoot(target)
+		else:
+			var t = find_closest_target()
+			if t:
+				set_target(t)
 
-func shoot(pos: Vector2):
-	gun.shoot(pos)
+func shoot(t: Node2D):
+	gun.shoot(t)
 	
 func take_damage(amount):
 	health_bar.update_value(-amount)
@@ -25,10 +34,47 @@ func take_damage(amount):
 func die():
 	queue_free()
 
+func is_dead():
+	return dead
+
 func _on_detection_zone_body_entered(body):
-	if body.is_in_group('enemy') and !target:
-		target = body
+	if is_enemy(body):
+		targets_in_range.append(body)
 
 func _on_detection_zone_body_exited(body):
-	if body == target:
-		target = null
+	if targets_in_range.has(body):
+		targets_in_range.erase(body)
+
+func build(pos: Vector2):
+	global_position = pos 
+	active = true
+	hitbox.disabled = false
+	modulate = "#ffffffff"
+	
+func is_active():
+	return active
+
+func find_closest_target():
+	var closest: Node2D
+	for t in targets_in_range:
+		if !closest:
+			closest = t
+		var dist = global_position.distance_to(t.global_position)
+		if dist < global_position.distance_to(closest.global_position):
+			closest = t
+			
+	return closest
+
+func is_enemy(t: Node2D):
+	return t.is_in_group('enemy')
+
+func free_target():
+	target = null
+
+func set_target(t):
+	if t.has_signal('died'):
+		if !t.died.is_connected(free_target):
+			t.died.connect(free_target)
+	if t.has_method('is_dead'):
+		if !t.is_dead():
+			target = t 

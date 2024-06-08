@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://yua1gj8f0cke"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_nkqdj"]
+
+[sub_resource type="Curve" id="Curve_h1cod"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, -200), 0.0, 0.0, 0, 0, Vector2(0.0415094, 90.4836), 100000.0, 100000.0, 0, 0, Vector2(0.10566, 195.944), -961.737, -961.737, 0, 0, Vector2(0.177358, 94.5398), 0.0, 0.0, 0, 0, Vector2(0.509434, -177.223), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_emre6"]
+curve = SubResource("Curve_h1cod")
+
+[sub_resource type="Curve" id="Curve_5wky3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0981132, 1), 9.77167, 9.77167, 0, 0, Vector2(0.237736, 1), 1.71683, 1.71683, 0, 0, Vector2(0.343396, 0.371295), 0.516771, 0.516771, 0, 0, Vector2(0.509434, 0.107644), 0.0, 0.0, 0, 0, Vector2(0.766038, 0), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="CurveTexture" id="CurveTexture_5kd20"]
+curve = SubResource("Curve_5wky3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c70kn"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.2, 0.5, 0)
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+angular_velocity_min = 1.0
+angular_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 1.0
+linear_accel_max = 5.11
+linear_accel_curve = SubResource("CurveTexture_emre6")
+radial_accel_min = 29.14
+radial_accel_max = 30.51
+tangential_accel_min = -30.14
+tangential_accel_max = 10.96
+scale_curve = SubResource("CurveTexture_5kd20")
+color = Color(0.439216, 0, 0, 0.4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5dol"]
+atlas = ExtResource("1_nkqdj")
+region = Rect2(1216, 704, 64, 64)
+
+[node name="BloodParticles" type="GPUParticles2D"]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_c70kn")
+texture = SubResource("AtlasTexture_s5dol")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
