@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://yua1gj8f0cke" path="res://scenes/vfx/blood_particles.tscn" id="7_gup7f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_46p11"]
-rough = true
+friction = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mbhoe"]
 radius = 15.0
@@ -32,7 +32,6 @@ gradient = SubResource("Gradient_ip2dm")
 z_index = 1
 physics_material_override = SubResource("PhysicsMaterial_46p11")
 script = ExtResource("1_8olwc")
-speed = 115.015
 death_particles = NodePath("BloodParticles")
 death_sprite_scene_path = "res://scenes/vfx/blood_puddle.tscn"
 
@@ -59,7 +58,7 @@ sfx = ExtResource("5_0w4hb")
 unique_name_in_owner = true
 script = ExtResource("6_o58ed")
 area = NodePath("CollisionShape2D")
-radius = 150.0
+radius = 300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_xvh1h")
@@ -75,5 +74,10 @@ texture = SubResource("GradientTexture1D_dcx25")
 [node name="BloodParticles" parent="." instance=ExtResource("7_gup7f")]
 z_index = 1
 
+[node name="DistanceTracker" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="finished" from="BloodParticles" to="." method="_on_blood_particles_finished"]
+[connection signal="timeout" from="DistanceTracker" to="." method="_on_distance_tracker_timeout"]

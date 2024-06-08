@@ -8,7 +8,7 @@ extends Node2D
 var tower_scene = preload("res://scenes/towers/tower.tscn")
 var panning: bool = false
 var mouse_pos: Vector2
-var zoom_step = 0.1
+var zoom_step = 0.05
 
 func _ready():
 	var tower = tower_scene.instantiate()
@@ -65,9 +65,10 @@ func can_build_here():
 	return !build_hint.is_colliding()
 	
 func zoom(amount: float, pos: Vector2):
-	camera.zoom.x += amount
-	camera.zoom.y += amount
+	var zoom_vec = Vector2(amount, amount)
+	var new_zoom = camera.zoom + zoom_vec
+	if new_zoom > Vector2(0, 0) and new_zoom < Vector2(2, 2):
+		camera.zoom = new_zoom
 	var mouse_offset = get_viewport_rect().get_center() - get_viewport().get_mouse_position() 
 	var zoom_factor = 1 / camera.zoom.x
 	camera.offset = pos + (mouse_offset * zoom_factor)
-	
