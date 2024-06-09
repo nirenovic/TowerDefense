@@ -1,14 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdy43x3pibvhm"]
+[gd_scene load_steps=4 format=3 uid="uid://cdy43x3pibvhm"]
 
 [ext_resource type="Script" path="res://scenes/control/Destroyer.gd" id="1_dbw2w"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_x5pil"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ota77"]
+size = Vector2(154, 141)
 
 [node name="Destroyer" type="Area2D"]
 script = ExtResource("1_dbw2w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.210683, 0.210683)
 shape = SubResource("RectangleShape2D_ota77")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.93621, 2.70131)
+texture = ExtResource("2_x5pil")
+region_enabled = true
+region_rect = Rect2(1088, 0, 64, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(2.93621, 2.70131)
+texture = ExtResource("2_x5pil")
+region_enabled = true
+region_rect = Rect2(1088, 0, 64, 64)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+scale = Vector2(2.93621, 2.70131)
+texture = ExtResource("2_x5pil")
+region_enabled = true
+region_rect = Rect2(1088, 0, 64, 64)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+scale = Vector2(2.93621, 2.70131)
+texture = ExtResource("2_x5pil")
+region_enabled = true
+region_rect = Rect2(1088, 0, 64, 64)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

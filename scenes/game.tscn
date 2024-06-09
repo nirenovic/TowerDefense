@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dutr1h4itokck"]
+[gd_scene load_steps=7 format=3 uid="uid://dutr1h4itokck"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_mfqnr"]
 [ext_resource type="PackedScene" uid="uid://bv5tsm0c4o2xo" path="res://scenes/user_interface/main_menu.tscn" id="2_bsrnc"]
 [ext_resource type="PackedScene" uid="uid://uujuv7v5ovsb" path="res://scenes/user_interface/user_interface.tscn" id="3_1jufe"]
 [ext_resource type="PackedScene" uid="uid://cq7eup2eplik8" path="res://scenes/control/build_hint.tscn" id="3_nfhpn"]
 [ext_resource type="PackedScene" uid="uid://cdy43x3pibvhm" path="res://scenes/control/Destroyer.tscn" id="5_vwa0e"]
+[ext_resource type="PackedScene" uid="uid://dp7k65jhv5ocs" path="res://scenes/user_interface/game_over.tscn" id="6_2n8x8"]
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("main_menu", "ui")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("main_menu", "game_over_menu", "ui")]
 script = ExtResource("1_mfqnr")
 main_menu = NodePath("MainMenu")
+game_over_menu = NodePath("GameOver")
 ui = NodePath("UserInterface")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -19,7 +21,10 @@ unique_name_in_owner = true
 [node name="BuildHint" parent="." instance=ExtResource("3_nfhpn")]
 unique_name_in_owner = true
 
-[node name="MainMenu" parent="." instance=ExtResource("2_bsrnc")]
-
 [node name="Destroyer" parent="." instance=ExtResource("5_vwa0e")]
 unique_name_in_owner = true
+z_index = 5
+
+[node name="MainMenu" parent="." instance=ExtResource("2_bsrnc")]
+
+[node name="GameOver" parent="." instance=ExtResource("6_2n8x8")]

@@ -1,10 +1,11 @@
 extends CanvasLayer
 
-signal start
+signal retry
 signal quit
 
-func _on_start_button_pressed():
-	start.emit()
+
+func _on_main_menu_button_pressed():
+	retry.emit()
 
 func _on_quit_button_pressed():
 	quit.emit()

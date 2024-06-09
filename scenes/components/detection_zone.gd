@@ -8,7 +8,3 @@ func _ready():
 	if area:
 		area.shape.radius = radius
 	
-func _draw():
-	if show_area and area:
-		if area.shape is CircleShape2D:
-			draw_circle(Vector2.ZERO, radius, Color(0, 0, 0, 0.1))

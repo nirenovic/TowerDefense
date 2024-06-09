@@ -35,7 +35,6 @@ func _on_body_exited(body):
 func _on_area_entered(area):
 	if area.is_in_group('no_build'):
 		colliding_areas.append(area)
-		print(area)
 
 func _on_area_exited(area):
 	if colliding_areas.has(area):

@@ -32,6 +32,7 @@ gradient = SubResource("Gradient_ip2dm")
 z_index = 1
 physics_material_override = SubResource("PhysicsMaterial_46p11")
 script = ExtResource("1_8olwc")
+speed = 300.0
 death_particles = NodePath("BloodParticles")
 death_sprite_scene_path = "res://scenes/vfx/blood_puddle.tscn"
 

@@ -4,6 +4,7 @@ extends StaticBody2D
 @onready var health_bar = %HealthBar 
 @onready var gun = %Gun
 @onready var hitbox = %Hitbox
+@onready var detection_zone = %DetectionZone
 
 var target = null
 var dead = false
@@ -79,3 +80,13 @@ func set_target(t):
 
 func get_hitbox():
 	return hitbox
+
+func _draw():
+	if detection_zone.show_area and detection_zone.area:
+		if detection_zone.area.shape is CircleShape2D:
+			var points = []
+			var radius = detection_zone.radius
+			var origin = Vector2(0, radius)
+			for point in 360:
+				points.append(origin.rotated(deg_to_rad(point)))
+			draw_polyline(points, Color(0, 0, 0, 0.05), 10, true)

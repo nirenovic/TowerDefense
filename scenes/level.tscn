@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkh2yd5b0hl12"]
+[gd_scene load_steps=8 format=3 uid="uid://bkh2yd5b0hl12"]
 
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_iq8cp"]
 [ext_resource type="TileSet" uid="uid://bsm5glxel1cn7" path="res://assets/tilesets/tileset.tres" id="1_xupqi"]
 [ext_resource type="PackedScene" uid="uid://bnn5wa0ccu1xs" path="res://scenes/enemies/spawner.tscn" id="2_n46ic"]
 [ext_resource type="Script" path="res://scenes/path.gd" id="3_0xkn7"]
@@ -14,7 +15,11 @@ point_count = 21
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q2651"]
 size = Vector2(304, 593)
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" node_paths=PackedStringArray("spawner", "end_zone")]
+script = ExtResource("1_iq8cp")
+spawner = NodePath("Spawner")
+end_zone = NodePath("EndZone")
+enemies_reached_limit = 1
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_xupqi")
