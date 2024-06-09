@@ -1,3 +1,67 @@
-[gd_scene format=3 uid="uid://uujuv7v5ovsb"]
+[gd_scene load_steps=2 format=3 uid="uid://uujuv7v5ovsb"]
 
-[node name="UserInterface" type="Node2D"]
+[ext_resource type="Script" path="res://scenes/user_interface/user_interface.gd" id="1_2xqme"]
+
+[node name="UserInterface" type="CanvasLayer"]
+script = ExtResource("1_2xqme")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Container" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="TopBar" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Score" type="Label" parent="MarginContainer/TopBar"]
+layout_mode = 2
+text = "Score:"
+
+[node name="ControlsPanel" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/ControlsPanel"]
+layout_mode = 2
+color = Color(0.458824, 0.458824, 0.458824, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ControlsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Controls" type="VBoxContainer" parent="MarginContainer/ControlsPanel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Build" type="Button" parent="MarginContainer/ControlsPanel/MarginContainer/Controls"]
+layout_mode = 2
+mouse_filter = 1
+text = "Build"
+
+[node name="Destroy" type="Button" parent="MarginContainer/ControlsPanel/MarginContainer/Controls"]
+layout_mode = 2
+mouse_filter = 1
+text = "Destroy"
+
+[connection signal="mouse_entered" from="MarginContainer/ControlsPanel" to="." method="_on_controls_panel_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ControlsPanel" to="." method="_on_controls_panel_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ControlsPanel/MarginContainer/Controls/Build" to="." method="_on_build_pressed"]
+[connection signal="pressed" from="MarginContainer/ControlsPanel/MarginContainer/Controls/Destroy" to="." method="_on_destroy_pressed"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdy43x3pibvhm"]
+
+[ext_resource type="Script" path="res://scenes/control/Destroyer.gd" id="1_dbw2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ota77"]
+
+[node name="Destroyer" type="Area2D"]
+script = ExtResource("1_dbw2w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ota77")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
