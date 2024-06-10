@@ -56,7 +56,7 @@ func set_disabled(status):
 	disabled = status
 
 func can_build():
-	return !is_colliding() and !is_disabled()
+	return !is_colliding() and !is_disabled() and is_in_bounds()
 
 func set_hint(node: Node2D):
 	if get_children():
@@ -64,4 +64,13 @@ func set_hint(node: Node2D):
 			remove_child(c)
 			c.queue_free()
 	add_child(node)
+	if node.is_in_group('physics_entity'):
+		node.remove_from_group('physics_entity')
 	set_collision_shape(node.get_hitbox().duplicate())
+
+func is_in_bounds():
+	var level = get_tree().get_first_node_in_group('level')
+	if level:
+		if level.get_boundary().get_overlapping_areas().has(self):
+			return true
+	return false

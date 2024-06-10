@@ -66,6 +66,8 @@ unique_name_in_owner = true
 fire_rate = 3.0
 projectile_scene_path = "res://scenes/projectiles/missile.tscn"
 sfx = ExtResource("6_0l1ll")
+pitch = 2.0
+volume = 0.8
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

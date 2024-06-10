@@ -6,6 +6,8 @@ extends Node2D
 @export var fire_rate: float = 1
 @export var projectile_scene_path: String = "res://scenes/projectiles/bullet.tscn"
 @export var sfx: AudioStream
+@export var pitch: float
+@export var volume: float
 
 var projectile_scene: PackedScene = null
 var can_fire: bool = false
@@ -16,6 +18,8 @@ func _ready():
 	timer.start()
 	projectile_scene = load(projectile_scene_path)
 	sfx_player.stream = sfx
+	sfx_player.pitch_scale = pitch
+	sfx_player.set_volume_db(volume)
 	
 func shoot(target: Node2D):
 	if can_fire:

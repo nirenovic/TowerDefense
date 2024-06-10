@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4do05kvumpxs"]
+[gd_scene load_steps=15 format=3 uid="uid://c4do05kvumpxs"]
 
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_7djb4"]
 [ext_resource type="Script" path="res://scenes/enemies/enemy.gd" id="1_8olwc"]
+[ext_resource type="AudioStream" uid="uid://6g8y4mlahrmn" path="res://assets/sounds/death_splatter.mp3" id="2_7ddg7"]
 [ext_resource type="PackedScene" uid="uid://cptnhkvo0lf2h" path="res://scenes/components/health_bar.tscn" id="3_lc401"]
 [ext_resource type="PackedScene" uid="uid://bbaprlwmuhg7h" path="res://scenes/components/gun.tscn" id="4_3q588"]
 [ext_resource type="AudioStream" uid="uid://b8c6kxatobhhk" path="res://assets/sounds/fire_bullet.mp3" id="5_0w4hb"]
@@ -32,9 +33,10 @@ gradient = SubResource("Gradient_ip2dm")
 z_index = 1
 physics_material_override = SubResource("PhysicsMaterial_46p11")
 script = ExtResource("1_8olwc")
-speed = 300.0
+speed = 200.0
 death_particles = NodePath("BloodParticles")
 death_sprite_scene_path = "res://scenes/vfx/blood_puddle.tscn"
+death_sound_file = ExtResource("2_7ddg7")
 
 [node name="Body" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -52,8 +54,10 @@ position = Vector2(0, -42)
 
 [node name="Gun" parent="." instance=ExtResource("4_3q588")]
 unique_name_in_owner = true
-fire_rate = 0.4
+fire_rate = 0.5
 sfx = ExtResource("5_0w4hb")
+pitch = 5.0
+volume = 0.1
 
 [node name="DetectionZone" type="Area2D" parent="." node_paths=PackedStringArray("area")]
 unique_name_in_owner = true

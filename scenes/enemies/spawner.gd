@@ -10,6 +10,7 @@ var entity_scene = PackedScene
 var enemies = []
 
 func _ready():
+	add_to_group('physics_entity')
 	entity_scene = load(path_to_entity_scene)
 	spawn()
 

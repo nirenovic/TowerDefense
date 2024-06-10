@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bm0opc4giqpan"]
+[gd_scene load_steps=5 format=3 uid="uid://bm0opc4giqpan"]
 
 [ext_resource type="Script" path="res://scenes/projectiles/projectile.gd" id="1_v1tys"]
+[ext_resource type="AudioStream" uid="uid://nqbnn8ihiscb" path="res://assets/sounds/bullet_collision.mp3" id="2_gndln"]
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_l5t3d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fpqdq"]
@@ -11,6 +12,10 @@ speed = 400.0
 hitbox = NodePath("Area2D/CollisionShape2D")
 sprite = NodePath("Sprite2D")
 damage = 5.0
+collision_sound_file = ExtResource("2_gndln")
+collision_sound_volume = 0.1
+collision_sound_pitch = 2.0
+collision_sound_rand = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

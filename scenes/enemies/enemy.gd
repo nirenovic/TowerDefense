@@ -5,6 +5,7 @@ signal died
 @export var speed: float = 100
 @export var death_particles: GPUParticles2D
 @export var death_sprite_scene_path: String
+@export var death_sound_file: AudioStreamMP3
 
 @onready var health_bar = %HealthBar
 @onready var model = %Body
@@ -28,6 +29,7 @@ var last_position: Vector2
 var spawn_position: Vector2
 
 func _ready():
+	add_to_group('physics_entity')
 	health_bar.dead.connect(die)
 	generate_custom_path()
 	death_sprite_scene = load(death_sprite_scene_path)
@@ -51,11 +53,20 @@ func die():
 	died.emit()
 	dead = true
 	model.scale = Vector2(0, 0)
+	model.set_deferred("disabled", true)
 	await get_tree().create_timer(randf_range(0, 0.2)).timeout
 	var death_sprite = death_sprite_scene.instantiate()
 	death_sprite.global_position = global_position
 	get_tree().root.add_child(death_sprite)
 	death_particles.emitting = true
+	# death sound
+	var audio_player = AudioStreamPlayer.new()
+	audio_player.pitch_scale = randf_range(0.8, 1.2)
+	audio_player.volume_db = 0.7
+	audio_player.stream = death_sound_file
+	add_child(audio_player)
+	audio_player.play()
+	#audio_player.finished.connect(queue_free)
 	
 func shoot(t: Node2D):
 	gun.shoot(t)

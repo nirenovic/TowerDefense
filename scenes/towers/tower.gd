@@ -10,8 +10,10 @@ var target = null
 var dead = false
 var active = false
 var targets_in_range = []
+var destroyed = false
 
 func _ready():
+	add_to_group('physics_entity')
 	health_bar.dead.connect(die)
 
 func _physics_process(delta):
@@ -31,7 +33,7 @@ func take_damage(amount):
 	health_bar.update_value(-amount)
 	
 func die():
-	queue_free()
+	destroyed = true
 
 func is_dead():
 	return dead
