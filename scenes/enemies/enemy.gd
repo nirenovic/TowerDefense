@@ -76,7 +76,7 @@ func shoot(t: Node2D):
 	gun.shoot(t)
 
 func take_damage(amount):
-	health_bar.update_value(-amount)
+	health_bar.apply_value(-amount)
 
 func _on_detection_zone_body_entered(body):
 	if body.is_in_group('tower') and body.has_method('is_active') and body.has_method('is_destroyed'):

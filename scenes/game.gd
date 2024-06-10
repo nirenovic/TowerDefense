@@ -3,6 +3,7 @@ extends Node2D
 @onready var camera = %Camera2D
 @onready var build_hint = %BuildHint
 @onready var destroyer = %Destroyer
+@onready var repair_tool = %RepairTool
 
 @export var tile_size: int = 4
 @export var main_menu: Node
@@ -39,6 +40,7 @@ func _ready():
 	# cursors
 	cursors['build'] = build_hint
 	cursors['destroy'] = destroyer
+	cursors['repair'] = repair_tool
 	set_cursor(null)
 	# placeholders
 	var demo_tower = tower_scene.instantiate()
@@ -48,7 +50,9 @@ func _ready():
 
 func _process(delta):
 	mouse_pos = get_mouse_global_position()
-	update_cursor()
+	update_cursor()	
+	if current_level:
+		keep_camera_in_bounds()
 	
 func _input(event):
 	if playing:
@@ -97,10 +101,24 @@ func zoom(amount: float, pos: Vector2):
 	var zoom_vec = Vector2(amount, amount)
 	var new_zoom = camera.zoom + zoom_vec
 	if new_zoom > Vector2(0, 0) and new_zoom < Vector2(2, 2):
-		camera.zoom = new_zoom
-	var mouse_offset = get_viewport_rect().get_center() - get_viewport().get_mouse_position() 
-	var zoom_factor = 1 / camera.zoom.x
-	camera.offset = pos + (mouse_offset * zoom_factor)
+		var mouse_offset = get_viewport_rect().get_center() - get_viewport().get_mouse_position() 
+		var zoom_factor = 1 / new_zoom.x
+		var new_offset = pos + (mouse_offset * zoom_factor)
+		if camera_is_in_bounds(new_zoom, new_offset):
+			camera.zoom = new_zoom
+			camera.offset = new_offset
+		if !camera_is_in_bounds(camera.zoom, camera.offset):
+			zoom(zoom_step, pos)
+		
+	#var zoom_vec = Vector2(amount, amount)
+	#var new_zoom = camera.zoom + zoom_vec
+	#if new_zoom > Vector2(0, 0) and new_zoom < Vector2(2, 2) and camera_is_in_bounds(new_zoom, camera.offset):
+		#camera.zoom = new_zoom
+	#var mouse_offset = get_viewport_rect().get_center() - get_viewport().get_mouse_position() 
+	#var zoom_factor = 1 / camera.zoom.x
+	#var new_offset = pos + (mouse_offset * zoom_factor)
+	#if camera_is_in_bounds(camera.zoom, new_offset):
+		#camera.offset = new_offset
 
 func start_game():
 	playing = true
@@ -139,13 +157,12 @@ func set_mode(mode):
 	if current_mode != mode:
 		set_cursor(mode)
 		current_mode = mode
-		if mode == 'build':
-			pass
-		if current_mode == 'destroy':
-			pass
 
 func is_destroy_mode():
 	return get_current_mode() == 'destroy'
+
+func is_repair_mode():
+	return get_current_mode() == 'repair'
 
 func set_cursor_disabled(status):
 	cursor_disabled = status
@@ -157,6 +174,8 @@ func handle_cursor_action():
 			spawn_tower(build_hint.global_position)
 		elif is_destroy_mode() and destroyer.has_target():
 			destroyer.destroy_target()
+		elif is_repair_mode() and repair_tool.has_target():
+			repair_tool.repair_target()
 
 func set_cursor(mode):
 	for c in cursors.values():
@@ -175,3 +194,64 @@ func game_over():
 	set_cursor(null)
 	ui.hide()
 	game_over_menu.show()
+
+func keep_camera_in_bounds():
+	var camera_left = camera.offset.x - ((get_viewport_rect().size.x / 2) * (1 / camera.zoom.x))
+	var camera_right = camera.offset.x + ((get_viewport_rect().size.x / 2) * (1 / camera.zoom.x))
+	var camera_top = camera.offset.y - ((get_viewport_rect().size.y / 2) * (1 / camera.zoom.y))
+	var camera_bottom = camera.offset.y + ((get_viewport_rect().size.y / 2) * (1 / camera.zoom.y))
+	
+	var bounds = current_level.get_boundary()
+	var bounds_left = bounds.global_position.x - bounds.get_child(0).shape.size.x / 2
+	var bounds_right = bounds.global_position.x + bounds.get_child(0).shape.size.x / 2
+	var bounds_top = bounds.global_position.y - bounds.get_child(0).shape.size.y / 2
+	var bounds_bottom = bounds.global_position.y + bounds.get_child(0).shape.size.y / 2
+	
+	var offset_left = abs(camera_left - bounds_left)
+	var offset_right = abs(camera_right - bounds_right)
+	var offset_top = abs(camera_top - bounds_top)
+	var offset_bottom = abs(camera_bottom - bounds_bottom)
+	
+	var out_left = camera_left < bounds_left
+	var out_right = camera_right > bounds_right
+	var out_top = camera_top < bounds_top
+	var out_bottom = camera_bottom > bounds_bottom
+	
+	if !(out_left and out_right):
+		if out_left:
+			camera.offset.x += offset_left
+		elif out_right:
+			camera.offset.x -= offset_right
+			
+	if !(out_top and out_bottom):
+		if out_top:
+			camera.offset.y += offset_top
+		elif out_bottom:
+			camera.offset.y -= offset_bottom
+
+func camera_is_in_bounds(zoom: Vector2, offset: Vector2, strict: bool = false):
+	var camera_left = offset.x - ((get_viewport_rect().size.x / 2) * (1 / zoom.x))
+	var camera_right = offset.x + ((get_viewport_rect().size.x / 2) * (1 / zoom.x))
+	var camera_top = offset.y - ((get_viewport_rect().size.y / 2) * (1 / zoom.y))
+	var camera_bottom = offset.y + ((get_viewport_rect().size.y / 2) * (1 / zoom.y))
+	
+	var bounds = current_level.get_boundary()
+	var bounds_left = bounds.global_position.x - bounds.get_child(0).shape.size.x / 2
+	var bounds_right = bounds.global_position.x + bounds.get_child(0).shape.size.x / 2
+	var bounds_top = bounds.global_position.y - bounds.get_child(0).shape.size.y / 2
+	var bounds_bottom = bounds.global_position.y + bounds.get_child(0).shape.size.y / 2
+	
+	var offset_left = abs(camera_left - bounds_left)
+	var offset_right = abs(camera_right - bounds_right)
+	var offset_top = abs(camera_top - bounds_top)
+	var offset_bottom = abs(camera_bottom - bounds_bottom)
+	
+	var out_left = camera_left < bounds_left
+	var out_right = camera_right > bounds_right
+	var out_top = camera_top < bounds_top
+	var out_bottom = camera_bottom > bounds_bottom
+	
+	var y_ok = !(out_top and out_bottom) and !(out_left or out_right)
+	var x_ok = !(out_left and out_right) and !(out_top or out_bottom)
+	
+	return y_ok or x_ok

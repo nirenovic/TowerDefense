@@ -21,6 +21,9 @@ func _on_build_pressed():
 
 func _on_destroy_pressed():
 	build_mode.emit('destroy')
+	
+func _on_repair_pressed():
+	build_mode.emit('repair')
 
 func _on_controls_panel_mouse_entered():
 	controls_hover.emit(true)

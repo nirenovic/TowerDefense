@@ -16,13 +16,13 @@ point_count = 21
 size = Vector2(304, 593)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0333"]
-size = Vector2(202.841, 131.093)
+size = Vector2(3815.71, 2440.77)
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("spawner", "end_zone", "boundary")]
 script = ExtResource("1_iq8cp")
 spawner = NodePath("Spawner")
 end_zone = NodePath("EndZone")
-enemies_reached_limit = 1
+enemies_reached_limit = 100
 boundary = NodePath("Boundary")
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -39,7 +39,7 @@ layer_2/tile_data = PackedInt32Array()
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("path") instance=ExtResource("2_n46ic")]
 position = Vector2(-602, -44)
-spawn_interval = 0.5
+spawn_interval = 50.0
 path = NodePath("../Path2D")
 
 [node name="Path2D" type="Path2D" parent="."]
@@ -62,9 +62,8 @@ rotation = -0.133761
 shape = SubResource("RectangleShape2D_q2651")
 
 [node name="Boundary" type="Area2D" parent="."]
+position = Vector2(0, 390)
 collision_mask = 1023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary"]
-position = Vector2(-58.0001, 345)
-scale = Vector2(18.7043, 18.7043)
 shape = SubResource("RectangleShape2D_k0333")

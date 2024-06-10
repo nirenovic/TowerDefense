@@ -5,33 +5,50 @@ extends StaticBody2D
 @onready var gun = %Gun
 @onready var hitbox = %Hitbox
 @onready var detection_zone = %DetectionZone
-@export var damage_particles_scene_path: String = "res://scenes/vfx/smoke_particles"
+@export var damage_particles: GPUParticles2D
+@export var destroyed_particles: GPUParticles2D
 
 var target = null
 var dead = false
 var active = false
 var targets_in_range = []
 var destroyed = false
-var damage_particles: GPUParticles2D
 
 func _ready():
 	add_to_group('physics_entity')
+	add_to_group('tower')
 	health_bar.dead.connect(die)
 	health_bar.value_changed.connect(update_status)
 	
 func _process(delta):
-	if destroyed:
-		pass
-
-func _physics_process(delta):
-	if active and !destroyed:
-		if target:
-			turret.look_at(target.global_position)
-			shoot(target)
+	if is_damaged():
+		damage_particles.emitting = true
+		damage_particles.show()
+		if destroyed:
+			modulate = "ffffff88"
+			destroyed_particles.emitting = true
+			destroyed_particles.show()
 		else:
-			var t = find_closest_target()
-			if t:
-				set_target(t)
+			destroyed_particles.emitting = false
+			destroyed_particles.hide()
+	else:
+		modulate = "ffffffff"
+		damage_particles.emitting = false
+		damage_particles.hide()
+		destroyed_particles.emitting = false
+		destroyed_particles.hide()
+		
+	
+func _physics_process(delta):
+	if active:
+		if !destroyed:
+			if target:
+				turret.look_at(target.global_position)
+				shoot(target)
+			else:
+				var t = find_closest_target()
+				if t:
+					set_target(t)
 
 func update_status():
 	pass
@@ -40,7 +57,7 @@ func shoot(t: Node2D):
 	gun.shoot(t)
 	
 func take_damage(amount):
-	health_bar.update_value(-amount)
+	health_bar.apply_value(-amount)
 	
 func die():
 	destroyed = true
@@ -49,7 +66,10 @@ func die():
 	turret.hide()
 	
 func repair(amount: float = 100):
-	pass
+	health_bar.fully_restore()
+	destroyed = false
+	turret.show()
+	
 
 func is_dead():
 	return destroyed
@@ -100,14 +120,18 @@ func get_hitbox():
 	return hitbox
 
 func _draw():
-	if detection_zone.show_area and detection_zone.area:
-		if detection_zone.area.shape is CircleShape2D:
-			var points = []
-			var radius = detection_zone.radius
-			var origin = Vector2(0, radius)
-			for point in 360:
-				points.append(origin.rotated(deg_to_rad(point)))
-			draw_polyline(points, Color(0, 0, 0, 0.05), 10, true)
+	if !active:
+		if detection_zone.show_area and detection_zone.area:
+			if detection_zone.area.shape is CircleShape2D:
+				var points = []
+				var radius = detection_zone.radius
+				var origin = Vector2(0, radius)
+				for point in 360:
+					points.append(origin.rotated(deg_to_rad(point)))
+				draw_polyline(points, Color(0, 0, 0, 0.05), 10, true)
 
 func is_destroyed():
 	return destroyed
+
+func is_damaged():
+	return health_bar.get_percentage() < 60

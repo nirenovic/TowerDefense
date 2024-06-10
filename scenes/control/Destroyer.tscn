@@ -17,25 +17,25 @@ shape = SubResource("RectangleShape2D_ota77")
 scale = Vector2(2.93621, 2.70131)
 texture = ExtResource("2_x5pil")
 region_enabled = true
-region_rect = Rect2(1088, 0, 64, 64)
+region_rect = Rect2(1088, -1, 64, 64)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 scale = Vector2(2.93621, 2.70131)
 texture = ExtResource("2_x5pil")
 region_enabled = true
-region_rect = Rect2(1088, 0, 64, 64)
+region_rect = Rect2(1088, -1, 64, 64)
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 scale = Vector2(2.93621, 2.70131)
 texture = ExtResource("2_x5pil")
 region_enabled = true
-region_rect = Rect2(1088, 0, 64, 64)
+region_rect = Rect2(1088, -1, 64, 64)
 
 [node name="Sprite2D4" type="Sprite2D" parent="."]
 scale = Vector2(2.93621, 2.70131)
 texture = ExtResource("2_x5pil")
 region_enabled = true
-region_rect = Rect2(1088, 0, 64, 64)
+region_rect = Rect2(1088, -1, 64, 64)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

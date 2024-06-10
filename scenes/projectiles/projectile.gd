@@ -68,7 +68,8 @@ func _on_area_2d_body_entered(body):
 							var dist = global_position.distance_to(b.global_position)
 							var max_dist = damage_radius.get_child(0).shape.radius
 							dist_mod = 1 - (dist / max_dist)
-						b.take_damage(damage * dist_mod)
+						if (!friendly and b.is_in_group('friendly')) or (friendly and b.is_in_group('enemy')):
+							b.take_damage(damage * dist_mod)
 			if particles:
 				particles.emitting = false
 			sprite.hide()

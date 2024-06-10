@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://oflmp5daotau"]
+[gd_scene load_steps=11 format=3 uid="uid://oflmp5daotau"]
 
 [ext_resource type="Script" path="res://scenes/towers/tower.gd" id="1_1q7rv"]
 [ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_myd87"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scenes/components/detection_zone.gd" id="4_8f5fp"]
 [ext_resource type="PackedScene" uid="uid://bbaprlwmuhg7h" path="res://scenes/components/gun.tscn" id="5_e8kgm"]
 [ext_resource type="AudioStream" uid="uid://bq7aa8npxcjso" path="res://assets/sounds/fire_missile.mp3" id="6_0l1ll"]
+[ext_resource type="PackedScene" uid="uid://drusvqipf36sy" path="res://scenes/vfx/smoke_particles.tscn" id="7_cc06t"]
+[ext_resource type="PackedScene" uid="uid://ced00e1rho4qd" path="res://scenes/vfx/fire_particles.tscn" id="8_2fouu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kv0qn"]
 size = Vector2(64, 64)
@@ -13,11 +15,13 @@ size = Vector2(64, 64)
 [sub_resource type="CircleShape2D" id="CircleShape2D_xvh1h"]
 radius = 304.133
 
-[node name="Tower" type="StaticBody2D" groups=["friendly", "tower"]]
+[node name="Tower" type="StaticBody2D" node_paths=PackedStringArray("damage_particles", "destroyed_particles") groups=["friendly", "tower"]]
 z_index = 1
 collision_layer = 256
 collision_mask = 513
 script = ExtResource("1_1q7rv")
+damage_particles = NodePath("SmokeParticles")
+destroyed_particles = NodePath("FireParticles")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -46,7 +50,6 @@ region_rect = Rect2(1216, 640, 64, 64)
 
 [node name="HealthBar" parent="." instance=ExtResource("3_o3dcn")]
 unique_name_in_owner = true
-z_index = 4
 position = Vector2(0, -91)
 health = 1000.0
 
@@ -68,6 +71,18 @@ projectile_scene_path = "res://scenes/projectiles/missile.tscn"
 sfx = ExtResource("6_0l1ll")
 pitch = 2.0
 volume = 0.8
+
+[node name="SmokeParticles" parent="." instance=ExtResource("7_cc06t")]
+z_index = 4
+scale = Vector2(4.52597, 3.57227)
+emitting = false
+amount = 100
+
+[node name="FireParticles" parent="." instance=ExtResource("8_2fouu")]
+z_index = 5
+scale = Vector2(3.33804, 3.33804)
+emitting = false
+amount = 50
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_zone_body_entered"]
 [connection signal="body_exited" from="DetectionZone" to="." method="_on_detection_zone_body_exited"]

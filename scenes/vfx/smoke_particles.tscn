@@ -1,50 +1,48 @@
 [gd_scene load_steps=8 format=3 uid="uid://drusvqipf36sy"]
 
-[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_57imi"]
+[ext_resource type="Texture2D" uid="uid://btxlnmq28rnk7" path="res://assets/towerDefense_tilesheet@2.png" id="1_yhvv3"]
 
-[sub_resource type="Curve" id="Curve_h1cod"]
-min_value = -200.0
-max_value = 200.0
-_data = [Vector2(0, -200), 0.0, 0.0, 0, 0, Vector2(0.0415094, 90.4836), 100000.0, 100000.0, 0, 0, Vector2(0.10566, 195.944), -961.737, -961.737, 0, 0, Vector2(0.177358, 94.5398), 0.0, 0.0, 0, 0, Vector2(0.509434, -177.223), 0.0, 0.0, 0, 0]
-point_count = 5
+[sub_resource type="Gradient" id="Gradient_xl0rw"]
+colors = PackedColorArray(0, 0, 0, 0.211765, 0, 0, 0, 0)
 
-[sub_resource type="CurveTexture" id="CurveTexture_emre6"]
-curve = SubResource("Curve_h1cod")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_36nf3"]
+gradient = SubResource("Gradient_xl0rw")
 
-[sub_resource type="Curve" id="Curve_5wky3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0981132, 1), 9.77167, 9.77167, 0, 0, Vector2(0.237736, 1), 1.71683, 1.71683, 0, 0, Vector2(0.343396, 0.371295), 0.516771, 0.516771, 0, 0, Vector2(0.509434, 0.107644), 0.0, 0.0, 0, 0, Vector2(0.766038, 0), 0.0, 0.0, 0, 0]
-point_count = 6
+[sub_resource type="Curve" id="Curve_pevk1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.607547, 0.421997), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_5kd20"]
-curve = SubResource("Curve_5wky3")
+[sub_resource type="CurveTexture" id="CurveTexture_pvd48"]
+curve = SubResource("Curve_pevk1")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c70kn"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kwr7y"]
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(0.2, 0.5, 0)
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 2.0
-initial_velocity_max = 4.0
-angular_velocity_min = 1.0
+emission_shape = 1
+emission_sphere_radius = 15.0
+angle_max = 360.0
+direction = Vector3(0, -1, 0)
+spread = 43.151
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+angular_velocity_min = -2.0
 angular_velocity_max = 2.0
-gravity = Vector3(0, 0, 0)
-linear_accel_min = 1.0
-linear_accel_max = 5.11
-linear_accel_curve = SubResource("CurveTexture_emre6")
-radial_accel_min = 29.14
-radial_accel_max = 30.51
-tangential_accel_min = -30.14
-tangential_accel_max = 10.96
-scale_curve = SubResource("CurveTexture_5kd20")
-color = Color(0.439216, 0, 0, 0.4)
+gravity = Vector3(0, -10, 0)
+linear_accel_max = 10.0
+scale_min = 2.0
+scale_max = 2.2
+scale_curve = SubResource("CurveTexture_pvd48")
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_36nf3")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s5dol"]
-atlas = ExtResource("1_57imi")
-region = Rect2(1216, 704, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dihmm"]
+atlas = ExtResource("1_yhvv3")
+region = Rect2(2049, 641, 126, 126)
 
-[node name="BloodParticles" type="GPUParticles2D"]
-amount = 100
-process_material = SubResource("ParticleProcessMaterial_c70kn")
-texture = SubResource("AtlasTexture_s5dol")
-explosiveness = 1.0
+[node name="SmokeParticles" type="GPUParticles2D"]
+z_index = 2
+scale = Vector2(0.946107, 0.746745)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_kwr7y")
+texture = SubResource("AtlasTexture_dihmm")
+lifetime = 5.0
 randomness = 1.0
