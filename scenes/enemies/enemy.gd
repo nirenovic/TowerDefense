@@ -44,8 +44,12 @@ func _physics_process(delta):
 			if velocity.length() < speed/2:
 				await get_tree().create_timer(3).timeout.connect(unstuck)
 		elif target:
-			shoot(target)
-			model.look_at(target.global_position)
+			if target.has_method('is_dead'):
+				if !target.is_dead():
+					shoot(target)
+					model.look_at(target.global_position)
+				else:
+					target = null
 		
 		global_position = lerp(global_position, global_position + velocity, delta) 
 	
@@ -75,8 +79,8 @@ func take_damage(amount):
 	health_bar.update_value(-amount)
 
 func _on_detection_zone_body_entered(body):
-	if body.is_in_group('tower') and body.has_method('is_active'):
-		if body.is_active():
+	if body.is_in_group('tower') and body.has_method('is_active') and body.has_method('is_destroyed'):
+		if body.is_active() and !body.is_destroyed():
 			target = body
 
 func set_path(p: Path2D):

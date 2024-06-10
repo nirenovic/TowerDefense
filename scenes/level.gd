@@ -14,7 +14,7 @@ var failed = false
 func _ready():
 	add_to_group('level')
 	end_zone.enemy_reached.connect(update_enemies_reached)
-	boundary.body_exited.connect(out_of_bounds)
+	#boundary.body_exited.connect(out_of_bounds)
 	boundary.area_exited.connect(out_of_bounds)
 	
 func _physics_process(delta):

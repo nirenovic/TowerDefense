@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm2d38hebycqg"]
+
+[ext_resource type="Script" path="res://scenes/vfx/explosion.gd" id="1_hhp48"]
+[ext_resource type="PackedScene" uid="uid://2eo2golsdunx" path="res://scenes/vfx/explosion_particles.tscn" id="2_edbv2"]
+[ext_resource type="AudioStream" uid="uid://cb3ta5ayo2sat" path="res://assets/sounds/explosion.mp3" id="3_j8t5w"]
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_hhp48")
+
+[node name="ExplosionParticles" parent="." instance=ExtResource("2_edbv2")]
+unique_name_in_owner = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_j8t5w")
+volume_db = 24.0
+pitch_scale = 1.1
+attenuation = 3.73213

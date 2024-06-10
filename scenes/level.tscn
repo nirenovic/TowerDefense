@@ -39,7 +39,7 @@ layer_2/tile_data = PackedInt32Array()
 
 [node name="Spawner" parent="." node_paths=PackedStringArray("path") instance=ExtResource("2_n46ic")]
 position = Vector2(-602, -44)
-spawn_interval = 10.0
+spawn_interval = 0.5
 path = NodePath("../Path2D")
 
 [node name="Path2D" type="Path2D" parent="."]

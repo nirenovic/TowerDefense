@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/control/end_zone.gd" id="1_23noa"]
 
-[node name="EndZone" type="Area2D"]
+[node name="EndZone" type="Area2D" groups=["no_build"]]
 script = ExtResource("1_23noa")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

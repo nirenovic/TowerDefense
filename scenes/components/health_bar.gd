@@ -1,6 +1,7 @@
 extends Node2D
 
 signal dead
+signal value_changed
 
 @onready var bar = %ProgressBar
 
@@ -15,6 +16,7 @@ func update_value(amount):
 	bar.value += amount
 	
 func _on_progress_bar_value_changed(value):
+	value_changed.emit()
 	if bar.value < bar.max_value:
 		show()
 	if value <= 0:
