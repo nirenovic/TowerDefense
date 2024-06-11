@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuildCursorStrategy" load_steps=4 format=3 uid="uid://hkhmoa4sy7s6"]
+
+[ext_resource type="Script" path="res://resources/strategies/cursors/build_cursor_strategy.gd" id="1_qq7ji"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_afo0m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgjq8"]
+atlas = ExtResource("2_afo0m")
+region = Rect2(1152, 0, 64, 64)
+
+[resource]
+script = ExtResource("1_qq7ji")
+cursor_name = "build"
+texture = SubResource("AtlasTexture_xgjq8")

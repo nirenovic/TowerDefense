@@ -65,6 +65,7 @@ text = "Destroy"
 
 [node name="Repair" type="Button" parent="MarginContainer/ControlsPanel/MarginContainer/Controls"]
 layout_mode = 2
+mouse_filter = 1
 text = "Repair
 "
 

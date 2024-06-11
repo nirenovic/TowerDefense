@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://donicy3hky6bx"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_tx6hh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vr38l"]
+atlas = ExtResource("1_tx6hh")
+region = Rect2(1088, 320, 64, 64)
+
+[node name="TreeAlt" type="RigidBody2D"]
+collision_layer = 1024
+collision_mask = 1536
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.8429, 1.8429)
+texture = SubResource("AtlasTexture_vr38l")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(1.8429, 1.8429)
+polygon = PackedVector2Array(18.7, -19, 23, -18.6, 18.6, 23, 10.9, 23, -20, 5.3, -20, 3.2, -26.7, -6.8, -24.4, -11, -21.7, -11, 17.9, -21.9)

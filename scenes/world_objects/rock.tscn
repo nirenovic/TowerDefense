@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://clrs4nrwveker"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_nhg1d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deyq8"]
+atlas = ExtResource("1_nhg1d")
+region = Rect2(1408, 320, 64, 64)
+
+[node name="Rock" type="RigidBody2D"]
+collision_layer = 1024
+collision_mask = 1536
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.59668, 1.59668)
+texture = SubResource("AtlasTexture_deyq8")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(1.59668, 1.59668)
+polygon = PackedVector2Array(24, -3.5, 24, 1.2, 9.2, 24, 2.4, 24, -23, 15.9, -23, -3.3, -25.5, -11, -19.9, -11, 0, -21.4, 0, -22.8, 5.2, -24.7)

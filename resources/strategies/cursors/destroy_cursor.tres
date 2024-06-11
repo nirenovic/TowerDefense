@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DestroyCursorStrategy" load_steps=4 format=3 uid="uid://bv8h6uwn4j6pd"]
+
+[ext_resource type="Script" path="res://resources/strategies/cursors/destroy_cursor_strategy.gd" id="1_6rect"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_usyat"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6aly"]
+atlas = ExtResource("2_usyat")
+region = Rect2(1088, 0, 64, 64)
+
+[resource]
+script = ExtResource("1_6rect")
+cursor_name = "destroy"
+texture = SubResource("AtlasTexture_u6aly")

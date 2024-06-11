@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://oflmp5daotau"]
+[gd_scene load_steps=11 format=3 uid="uid://oflmp5daotau"]
 
 [ext_resource type="Script" path="res://scenes/towers/tower.gd" id="1_1q7rv"]
+[ext_resource type="Resource" uid="uid://by3iobfqt7muo" path="res://resources/strategies/towers/default_tower.tres" id="2_cxtxl"]
 [ext_resource type="PackedScene" uid="uid://cptnhkvo0lf2h" path="res://scenes/components/health_bar.tscn" id="3_o3dcn"]
 [ext_resource type="Script" path="res://scenes/components/detection_zone.gd" id="4_8f5fp"]
 [ext_resource type="PackedScene" uid="uid://bbaprlwmuhg7h" path="res://scenes/components/gun.tscn" id="5_e8kgm"]
@@ -8,24 +9,31 @@
 [ext_resource type="PackedScene" uid="uid://drusvqipf36sy" path="res://scenes/vfx/smoke_particles.tscn" id="7_cc06t"]
 [ext_resource type="PackedScene" uid="uid://ced00e1rho4qd" path="res://scenes/vfx/fire_particles.tscn" id="8_2fouu"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kv0qn"]
+size = Vector2(64, 64)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_xvh1h"]
 radius = 304.133
 
 [node name="Tower" type="StaticBody2D" node_paths=PackedStringArray("damage_particles", "destroyed_particles") groups=["friendly", "tower"]]
 z_index = 1
-collision_layer = 512
-collision_mask = 515
+collision_layer = 256
+collision_mask = 513
 script = ExtResource("1_1q7rv")
+tower_strategy = ExtResource("2_cxtxl")
 damage_particles = NodePath("SmokeParticles")
 destroyed_particles = NodePath("FireParticles")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+scale = Vector2(2.5564, 2.5564)
+shape = SubResource("RectangleShape2D_kv0qn")
 
 [node name="BaseSprite" type="Sprite2D" parent="Hitbox"]
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(0.5, 0)
+scale = Vector2(1.11731, 1.11731)
 region_enabled = true
 region_rect = Rect2(1281, 449, 62, 62)
 
@@ -35,7 +43,9 @@ unique_name_in_owner = true
 [node name="TurretSprite" type="Sprite2D" parent="Turret"]
 unique_name_in_owner = true
 z_index = 3
+position = Vector2(19, 1.72804e-11)
 rotation = 1.57081
+scale = Vector2(1.79276, 1.79276)
 region_enabled = true
 region_rect = Rect2(1216, 640, 64, 64)
 

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BaseCursorStrategy" load_steps=2 format=3 uid="uid://dc8ifi3sgp1bu"]
+
+[ext_resource type="Script" path="res://resources/strategies/cursors/base_cursor_strategy.gd" id="1_ihu8n"]
+
+[resource]
+script = ExtResource("1_ihu8n")
+name = "default"

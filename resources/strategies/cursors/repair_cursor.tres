@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RepairCursorStrategy" load_steps=4 format=3 uid="uid://bgixjedpceh2v"]
+
+[ext_resource type="Script" path="res://resources/strategies/cursors/repair_cursor_strategy.gd" id="1_naw0s"]
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="2_8pdco"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ix13c"]
+atlas = ExtResource("2_8pdco")
+region = Rect2(1024, 0, 64, 64)
+
+[resource]
+script = ExtResource("1_naw0s")
+cursor_name = "repair"
+texture = SubResource("AtlasTexture_ix13c")

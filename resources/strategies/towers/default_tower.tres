@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BaseTowerStrategy" load_steps=5 format=3 uid="uid://by3iobfqt7muo"]
+
+[ext_resource type="Texture2D" uid="uid://2fkuol6oyahr" path="res://assets/tilesheet.png" id="1_by72p"]
+[ext_resource type="Script" path="res://resources/strategies/towers/base_tower_strategy.gd" id="1_ocbw3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2666"]
+atlas = ExtResource("1_by72p")
+region = Rect2(1280, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uniug"]
+atlas = ExtResource("1_by72p")
+region = Rect2(1280, 640, 64, 64)
+
+[resource]
+script = ExtResource("1_ocbw3")
+base_texture = SubResource("AtlasTexture_r2666")
+turret_texture = SubResource("AtlasTexture_uniug")
+scale = 2.0

@@ -1,9 +1,6 @@
 extends Node2D
 
 @onready var camera = %Camera2D
-@onready var build_hint = %BuildHint
-@onready var destroyer = %Destroyer
-@onready var repair_tool = %RepairTool
 
 @export var tile_size: int = 4
 @export var main_menu: Node
@@ -17,18 +14,11 @@ var panning: bool = false
 var mouse_pos: Vector2
 var zoom_step = 0.05
 var playing = false
-var current_mode: String
-var current_cursor
-var cursor_disabled: bool = false
-var cursors: Dictionary
 var mouse_moving = false
 var last_mouse_pos = Vector2.ZERO
+var cursor = preload("res://scenes/control/cursor.tscn")
 
 func _ready():
-	# ui
-	ui.build_mode.connect(set_mode)
-	ui.controls_hover.connect(set_cursor_disabled)
-	ui.hide()
 	# main menu
 	main_menu.start.connect(start_game)
 	main_menu.quit.connect(quit)
@@ -37,14 +27,13 @@ func _ready():
 	game_over_menu.hide()
 	game_over_menu.quit.connect(quit)
 	game_over_menu.retry.connect(go_to_main)
-	# cursors
-	cursors['build'] = build_hint
-	cursors['destroy'] = destroyer
-	cursors['repair'] = repair_tool
-	set_cursor(null)
-	# placeholders
-	var demo_tower = tower_scene.instantiate()
-	build_hint.set_hint(demo_tower)
+	# cursor
+	cursor = cursor.instantiate()
+	add_child(cursor)
+	# ui
+	ui.build_mode.connect(cursor.set_mode)
+	ui.controls_hover.connect(cursor.set_disabled)
+	ui.hide()
 	# init
 	go_to_main()
 
@@ -59,7 +48,7 @@ func _input(event):
 		if Input.is_action_just_pressed('mouse_right'):
 			pass
 		if Input.is_action_just_pressed('mouse_left'):
-			handle_cursor_action()
+			cursor.handle_click()
 
 		# camera panning
 		if Input.is_action_just_pressed('mouse_middle'):
@@ -93,9 +82,6 @@ func get_closest_tile_position():
 	var y = floor(mouse_pos.y) - (floori(mouse_pos.y) % tile_size)
 	var closest = Vector2(x, y)
 	return closest
-
-func can_build_here():
-	return build_hint.can_build()
 	
 func zoom(amount: float, pos: Vector2):
 	var zoom_vec = Vector2(amount, amount)
@@ -107,18 +93,6 @@ func zoom(amount: float, pos: Vector2):
 		if camera_is_in_bounds(new_zoom, new_offset):
 			camera.zoom = new_zoom
 			camera.offset = new_offset
-		if !camera_is_in_bounds(camera.zoom, camera.offset):
-			zoom(zoom_step, pos)
-		
-	#var zoom_vec = Vector2(amount, amount)
-	#var new_zoom = camera.zoom + zoom_vec
-	#if new_zoom > Vector2(0, 0) and new_zoom < Vector2(2, 2) and camera_is_in_bounds(new_zoom, camera.offset):
-		#camera.zoom = new_zoom
-	#var mouse_offset = get_viewport_rect().get_center() - get_viewport().get_mouse_position() 
-	#var zoom_factor = 1 / camera.zoom.x
-	#var new_offset = pos + (mouse_offset * zoom_factor)
-	#if camera_is_in_bounds(camera.zoom, new_offset):
-		#camera.offset = new_offset
 
 func start_game():
 	playing = true
@@ -134,9 +108,6 @@ func go_to_main():
 func quit():
 	get_tree().quit()
 
-func is_build_mode():
-	return get_current_mode() == 'build'
-
 func load_level():
 	if current_level:
 		remove_child(current_level)
@@ -149,49 +120,15 @@ func load_level():
 	current_level.enemy_reached.connect(ui.set_enemies_reached_label)
 	current_level.fail.connect(game_over)
 	add_child(current_level)
-
-func get_current_mode():
-	return current_mode
-	
-func set_mode(mode):
-	if current_mode != mode:
-		set_cursor(mode)
-		current_mode = mode
-
-func is_destroy_mode():
-	return get_current_mode() == 'destroy'
-
-func is_repair_mode():
-	return get_current_mode() == 'repair'
-
-func set_cursor_disabled(status):
-	cursor_disabled = status
-	build_hint.set_disabled(status)
-	
-func handle_cursor_action():
-	if !cursor_disabled:
-		if is_build_mode() and can_build_here():
-			spawn_tower(build_hint.global_position)
-		elif is_destroy_mode() and destroyer.has_target():
-			destroyer.destroy_target()
-		elif is_repair_mode() and repair_tool.has_target():
-			repair_tool.repair_target()
-
-func set_cursor(mode):
-	for c in cursors.values():
-		c.hide()
-	if cursors.keys().has(mode):
-		current_cursor = cursors[mode]
 		
 func update_cursor():
-	if playing and current_cursor:
-		current_cursor.show()
-		current_cursor.global_position = mouse_pos
+	if playing and cursor:
+		cursor.show()
+		cursor.global_position = mouse_pos
 		#current_cursor.global_position = get_closest_tile_position()
 
 func game_over():
 	playing = false
-	set_cursor(null)
 	ui.hide()
 	game_over_menu.show()
 
@@ -222,12 +159,16 @@ func keep_camera_in_bounds():
 			camera.offset.x += offset_left
 		elif out_right:
 			camera.offset.x -= offset_right
+	else:
+		zoom(zoom_step, mouse_pos)
 			
 	if !(out_top and out_bottom):
 		if out_top:
 			camera.offset.y += offset_top
 		elif out_bottom:
 			camera.offset.y -= offset_bottom
+	else:
+		zoom(zoom_step, mouse_pos)	
 
 func camera_is_in_bounds(zoom: Vector2, offset: Vector2, strict: bool = false):
 	var camera_left = offset.x - ((get_viewport_rect().size.x / 2) * (1 / zoom.x))
@@ -251,7 +192,7 @@ func camera_is_in_bounds(zoom: Vector2, offset: Vector2, strict: bool = false):
 	var out_top = camera_top < bounds_top
 	var out_bottom = camera_bottom > bounds_bottom
 	
-	var y_ok = !(out_top and out_bottom) and !(out_left or out_right)
-	var x_ok = !(out_left and out_right) and !(out_top or out_bottom)
+	var y_ok = (!out_top and !out_bottom) and (!out_left or !out_right)
+	var x_ok = (!out_left and !out_right) and (!out_top or !out_bottom)
 	
 	return y_ok or x_ok

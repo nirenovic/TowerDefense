@@ -1,10 +1,15 @@
+class_name Tower
 extends StaticBody2D
 
 @onready var turret = %Turret
+@onready var turret_sprite: Sprite2D = %TurretSprite
 @onready var health_bar = %HealthBar 
 @onready var gun = %Gun
 @onready var hitbox = %Hitbox
 @onready var detection_zone = %DetectionZone
+@onready var base_sprite: Sprite2D = %BaseSprite
+
+@export var tower_strategy: BaseTowerStrategy
 @export var damage_particles: GPUParticles2D
 @export var destroyed_particles: GPUParticles2D
 
@@ -19,24 +24,25 @@ func _ready():
 	add_to_group('tower')
 	health_bar.dead.connect(die)
 	health_bar.value_changed.connect(update_status)
+	tower_strategy.init(self)
+	hitbox.disabled = true
 	
 func _process(delta):
-	if is_damaged():
-		damage_particles.emitting = true
-		damage_particles.show()
-		if destroyed:
-			modulate = "ffffff88"
-			destroyed_particles.emitting = true
-			destroyed_particles.show()
+	if active:
+		if is_damaged():
+			damage_particles.emitting = true
+			damage_particles.show()
+			if destroyed:
+				destroyed_particles.emitting = true
+				destroyed_particles.show()
+			else:
+				destroyed_particles.emitting = false
+				destroyed_particles.hide()
 		else:
+			damage_particles.emitting = false
+			damage_particles.hide()
 			destroyed_particles.emitting = false
 			destroyed_particles.hide()
-	else:
-		modulate = "ffffffff"
-		damage_particles.emitting = false
-		damage_particles.hide()
-		destroyed_particles.emitting = false
-		destroyed_particles.hide()
 		
 	
 func _physics_process(delta):
@@ -65,11 +71,10 @@ func die():
 	add_child(explosion)
 	turret.hide()
 	
-func repair(amount: float = 100):
+func repair():
 	health_bar.fully_restore()
 	destroyed = false
 	turret.show()
-	
 
 func is_dead():
 	return destroyed
@@ -135,3 +140,14 @@ func is_destroyed():
 
 func is_damaged():
 	return health_bar.get_percentage() < 60
+
+func set_base_texture(t: Texture2D):
+	base_sprite.texture = t
+	
+func set_turret_texture(t: Texture2D):
+	turret_sprite.texture = t
+
+func generate_hitbox_shape():
+	var rect = RectangleShape2D.new()
+	rect.size = base_sprite.get_rect().size
+	hitbox.shape = rect

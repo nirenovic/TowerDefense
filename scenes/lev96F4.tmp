@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkh2yd5b0hl12"]
+[gd_scene load_steps=10 format=3 uid="uid://bkh2yd5b0hl12"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_iq8cp"]
 [ext_resource type="TileSet" uid="uid://bsm5glxel1cn7" path="res://assets/tilesets/tileset.tres" id="1_xupqi"]
 [ext_resource type="PackedScene" uid="uid://bnn5wa0ccu1xs" path="res://scenes/enemies/spawner.tscn" id="2_n46ic"]
 [ext_resource type="Script" path="res://scenes/path.gd" id="3_0xkn7"]
 [ext_resource type="PackedScene" uid="uid://dykd1vlgcae0j" path="res://scenes/control/end_zone.tscn" id="4_ayfx0"]
+[ext_resource type="PackedScene" uid="uid://drl5tpeq4njbw" path="res://scenes/world_objects/tree.tscn" id="6_qsrm5"]
 
 [sub_resource type="Curve2D" id="Curve2D_thgg4"]
 _data = {
@@ -47,16 +48,14 @@ curve = SubResource("Curve2D_thgg4")
 script = ExtResource("3_0xkn7")
 
 [node name="NoBuildZone" type="Area2D" parent="." groups=["no_build"]]
-collision_layer = 1536
-collision_mask = 1537
+collision_layer = 512
+collision_mask = 513
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NoBuildZone"]
 scale = Vector2(0.614187, 1.59294)
 polygon = PackedVector2Array(-249.11, -218.464, 112.344, -247.969, 420.067, -248.597, 462.4, -217.208, 630.101, -208.42, 662.664, -144.387, 745.701, -106.093, 859.672, -6.2777, 952.478, 79.099, 934.568, 187.075, 828.737, 249.225, 524.27, 279.358, -354.94, 295.68, -455.887, 328.951, -682.202, 341.507, -691.971, 501.588, 441.233, 510.377, 529.154, 473.339, 685.458, 463.922, 722.906, 433.789, 1201.59, 426.884, 1224.38, 355.946, 1315.56, 330.835, 1330.21, 268.686, 1514.2, 261.78, 1574.44, 235.414, 1740.51, 217.208, 1786.1, 190.842, 2108.48, 190.842, 2108.48, 394.867, 2015.67, 419.978, 2007.53, 451.994, 1851.23, 448.228, 1808.89, 419.978, 1615.14, 418.095, 1584.21, 448.228, 1496.29, 457.017, 1476.75, 489.033, 1390.45, 506.61, 1375.8, 533.604, 989.926, 540.51, 942.709, 574.41, 675.689, 577.548, 620.332, 613.331, -649.639, 615.215, -700.112, 581.315, -858.044, 568.76, -911.774, 533.604, -1059.94, 527.955, -1069.71, 315.141, -986.669, 295.68, -954.106, 235.414, -792.917, 219.092, -750.585, 188.959, -475.425, 182.053, -433.092, 153.176, 459.143, 141.248, 486.822, -15.0665, 390.76, -36.4107, 363.081, -100.443, -354.94, -111.115, -397.273, -66.5436, -581.256, -66.5436, -621.96, -33.2718, -714.765, -22.5997, -714.765, 6.2777, -888.979, 21.972, -944.337, 50.2216, -1046.91, 52.1049, -1128.32, 18.2053, -1188.56, -4.39439, -1183.68, -126.81, -903.633, -145.015, -861.3, -171.381, -498.219, -178.914, -442.862, -207.164)
 
 [node name="EndZone" parent="." instance=ExtResource("4_ayfx0")]
-collision_layer = 1536
-collision_mask = 1536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndZone"]
 position = Vector2(1178, 478)
@@ -69,3 +68,25 @@ collision_mask = 1023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary"]
 shape = SubResource("RectangleShape2D_k0333")
+
+[node name="WorldObjects" type="Node2D" parent="."]
+
+[node name="Tree" parent="WorldObjects" instance=ExtResource("6_qsrm5")]
+position = Vector2(-259, 96)
+rotation = 0.285169
+scale = Vector2(2.8814, 2.8814)
+
+[node name="Tree2" parent="WorldObjects" instance=ExtResource("6_qsrm5")]
+position = Vector2(-687, -383)
+rotation = -0.495013
+scale = Vector2(1.94502, 1.94502)
+
+[node name="Tree3" parent="WorldObjects" instance=ExtResource("6_qsrm5")]
+position = Vector2(-118, -663)
+rotation = 0.829114
+scale = Vector2(3.50889, 3.50889)
+
+[node name="Tree4" parent="WorldObjects" instance=ExtResource("6_qsrm5")]
+position = Vector2(-259, 96)
+rotation = 0.285169
+scale = Vector2(2.8814, 2.8814)

@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://8fi5xjmgay08"]
+
+[ext_resource type="Script" path="res://scenes/control/cursor.gd" id="1_fxeph"]
+[ext_resource type="Resource" uid="uid://dc8ifi3sgp1bu" path="res://resources/strategies/cursors/default_cursor.tres" id="2_5yi6b"]
+[ext_resource type="Resource" uid="uid://hkhmoa4sy7s6" path="res://resources/strategies/cursors/build_cursor.tres" id="3_7ejdp"]
+[ext_resource type="Resource" uid="uid://bv8h6uwn4j6pd" path="res://resources/strategies/cursors/destroy_cursor.tres" id="4_83pos"]
+[ext_resource type="Resource" uid="uid://bgixjedpceh2v" path="res://resources/strategies/cursors/repair_cursor.tres" id="5_eeepx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nd0ji"]
+
+[node name="Cursor" type="Area2D"]
+z_index = 10
+collision_layer = 512
+collision_mask = 1539
+script = ExtResource("1_fxeph")
+cursor_strategies = Array[Resource("res://resources/strategies/cursors/base_cursor_strategy.gd")]([ExtResource("2_5yi6b"), ExtResource("3_7ejdp"), ExtResource("4_83pos"), ExtResource("5_eeepx")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_nd0ji")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
